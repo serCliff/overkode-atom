@@ -1,0 +1,51 @@
+
+    // https://github.com/developit/greenlet/issues/24
+    // https://github.com/learn-co/atom-socket
+    // https://github.com/mozilla/django-csp/blob/master/docs/configuration.rst#id1
+
+    // aceSocket = new WebSocket(
+    //         'ws://' + this.host +
+    //         '/ws/ace/isi/');
+            // '/ws/ace/' + this.roomName + '/');
+
+    // const AtomSocket = require('atom-socket')
+    //
+    // this.aceSocket = new AtomSocket('term',
+    //         'ws://' + this.host +
+    //         '/ws/ace/' + this.roomName + '/')
+
+    // const AtomSocket = require('atom-socket')
+    //
+    // this.aceSocket = new AtomSocket('term', 'wss://' + this.host +
+    // '/ws/ace/isi/')
+    // CSP_WORKER_SRC
+
+
+
+
+
+    // this.aceSocket.on('error', (err) => {
+    //   console.error(err)
+    // })
+    //
+    // this.aceSocket.on('open', () => {
+    //   console.log('Client Connected')
+    // })
+    //
+    // this.aceSocket.on('close', () => {
+    //   console.log('Client Closed')
+    // })
+    //
+    // this.aceSocket.on('message', (msg) => {
+    //   console.log(msg)
+    // })
+    //
+    // this.aceSocket.on('open:cached', () => {
+    //   console.log('Client Connected through Existing WebSocket')
+    // })
+    //
+    // this.aceSocket.send('hello world')
+    //
+    // this.aceSocket.close()
+    //
+    // this.aceSocket.reset()

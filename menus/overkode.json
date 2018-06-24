@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Connect overkode",
+        "command": "overkode:connect"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "overkode",
+          "submenu": [
+            {
+              "label": "Connect",
+              "command": "overkode:connect"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
