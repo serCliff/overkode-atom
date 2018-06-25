@@ -49,3 +49,94 @@
     // this.aceSocket.close()
     //
     // this.aceSocket.reset()
+
+
+
+
+
+    function remove_text(delta, atom){
+        var start = delta['start']
+        var end = delta['end']
+        editor.session.remove(
+                new ace.Range( start['row'], start['column'], end['row'], end['column'] ));
+    };
+
+
+
+    // SOCKET METHODS
+    // Connecting message
+    function connecting_message(){
+        this.aceSocket.send(
+            JSON.stringify( {'creation': {'timestamp': 'now', 'user': this.user, 'action': 'connecting'}} ));
+    };
+
+    function insert_text(delta, atom){
+        //Insert the text on the editor
+        var start = delta['start']
+        var end = delta['end']
+        var lines = delta['lines']
+
+        var text = ""
+        for (var row in lines){
+            text += lines[row]
+            if(row != (lines.length-1)){
+                text+="\n"
+            }
+        };
+
+        current_text = atom.workspace.getActiveTextEditor().getTextInBufferRange([[ start['row'], start['column'] ], [end['row'], end['column']]))
+
+        if ( current_text != text  ) {
+            //Update the editor inserting new text on his specific place
+            set_text([ [start['column'], start['row']], [start['column'], start['row']] ], text, atom)
+
+        } else {
+            //If the text exists but can be an update or insert the same characters on the same place
+            line_text = atom.workspace.getActiveTextEditor().lineTextForBufferRow(start['row'])
+
+            if (line_text != text) {
+                set_text([ [start['column'], start['row']], [start['column'], start['row']] ], text, atom)
+            };
+        };
+    };
+
+    function edition_message(data, atom) {
+        //Manage received message that change the content of the editor
+        // console.log(data)
+        var delta = data['content'];
+        var action = data['creation']['action'];
+
+
+
+        // console.log("MENSAJE RECIBIDO: "+action)
+
+        if (action == "insert") {
+            insert_text(delta, atom)
+
+        } else if (action == "fetch_code") {
+            text = atom.workspace.getActiveTextEditor().getText()
+
+
+            final_row = text.length-1
+            final_column = text[final_row].length
+            start = {'row': 0, 'column': 0}
+            end = {'row': final_row, 'column': final_column}
+
+            var delta = {}
+            delta['start'] = start
+            delta['end'] = end
+            delta['action'] = "reply_code"
+            delta['lines'] = text
+            delta['id'] = 0
+
+            real_lines = doc.getLines(start['row'], end['row'])
+            delta['real_lines'] = real_lines
+
+            // console.log(delta)
+            this.aceSocket.send(JSON.stringify( create_message( delta ) ));
+
+        } else {
+            remove_text(delta, atom)
+        };
+
+    };

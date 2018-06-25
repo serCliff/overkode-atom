@@ -4,6 +4,10 @@
       {
         "label": "Connect overkode",
         "command": "overkode:connect"
+      },
+      {
+        "label": "Sent Message overkode",
+        "command": "overkode:sm"
       }
     ]
   },
